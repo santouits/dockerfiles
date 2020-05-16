@@ -1,0 +1,7 @@
+INSTRUCTIONS
+
+```
+docker build --tag godot .
+bash run_source_on_this_on_your_host
+godot
+```

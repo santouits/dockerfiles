@@ -1,0 +1,21 @@
+#! /bin/bash
+
+# source this on your .profile or elsewhere and then just run godot from your terminal
+
+function godot {
+  GODOT_PROJECTS_FOLDER=Godot #Change this to whatever folder you keep your projects
+  SOCKET=/tmp/.X11-unix
+  CHOME=/home/gamedev/
+  CACHE=.cache/godot
+  CONFIG=.config/godot
+  SHARE=.local/share/godot
+  SHADER_CACHE=.cache/mesa_shader_cache
+  PULSE_CONFIG=.config/pulse
+  HOST=$HOME/
+  mkdir -p $HOST$CACHE
+  mkdir -p $HOST$CONFIG
+  mkdir -p $HOST$SHARE
+  mkdir -p $HOST$GODOT_PROJECTS_FOLDER
+  docker run -u gamedev --name godot-container -e DISPLAY=$DISPLAY -v $SOCKET:$SOCKET -v $HOST$GODOT_PROJECTS_FOLDER:$CHOME$GODOT_PROJECTS_FOLDER -v $HOST$CACHE:$CHOME$CACHE -v $HOST$SHARE:$CHOME$SHARE -v $HOST$CONFIG:$CHOME$CONFIG -v $HOST$SHADER_CACHE:$CHOME$SHADER_CACHE -v $HOST$PULSE_CONFIG:$CHOME$PULSE_CONFIG --device /dev/dri --device /dev/snd --rm  godot
+}
+

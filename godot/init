@@ -1,0 +1,25 @@
+#! bin/bash
+
+# When you start godot it starts as a project manager.
+# By opening a game in the editor, the project manager process exits.
+# If we do nothing the container will exit.
+# In order to keep the container alive we check if any new godot processes started.
+
+# Opens the godot project manager and blocks
+godot
+# Exited the project manager and maybe started the editor
+
+# Check if any godot processes are running and if there are any keep the container alive.
+while true; do
+  PID=
+  PID=`ps aux | grep -v "grep" | grep godot | head -n 1 | awk '{print $2}'`
+  if [ -z $PID ]
+  then
+    echo "No Godot processes are running"
+    break;
+  else
+    echo "A Godot process with pid $PID is running."
+    tail --pid=$PID -f /dev/null
+  fi
+done
+# Container exits
